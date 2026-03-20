@@ -1,0 +1,140 @@
+<!-- src/main/resources/templates/admin-registration-request.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Registration Request</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
+        .content { padding: 30px; background-color: #f9f9f9; border: 1px solid #ddd; border-top: none; }
+        .details { margin: 20px 0; }
+        .detail-item { margin: 15px 0; padding: 10px; background-color: white; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .detail-item strong { display: inline-block; width: 150px; color: #555; }
+        .documents { margin: 30px 0; }
+        .document-item { margin: 10px 0; padding: 10px; background-color: #e8f5e9; border-radius: 5px; }
+        .document-item a { color: #4CAF50; text-decoration: none; }
+        .document-item a:hover { text-decoration: underline; }
+        .footer { margin-top: 30px; text-align: center; color: #888; font-size: 12px; }
+        .admin-panel { text-align: center; margin: 30px 0; }
+        .button { 
+            display: inline-block; 
+            padding: 12px 30px; 
+            background-color: #4CAF50; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 5px;
+            font-weight: bold;
+        }
+        .button:hover { background-color: #45a049; }
+        .api-info { background-color: #333; color: #fff; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .api-info code { display: block; margin: 10px 0; color: #ffd700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 New Registration Request</h1>
+        </div>
+        <div class="content">
+            <p>Hello Admin,</p>
+            <p>A new user has submitted a registration request. Please review the details below:</p>
+            
+            <div class="details">
+                <div class="detail-item">
+                    <strong>Role:</strong> 
+                    <span th:text="${user.role}" style="color: #4CAF50; font-weight: bold;"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>Email:</strong> 
+                    <span th:text="${user.email}"></span>
+                </div>
+                <div class="detail-item" th:if="${user.company_name}">
+                    <strong>Company Name:</strong> 
+                    <span th:text="${user.company_name}"></span>
+                </div>
+                <div class="detail-item" th:if="${user.company_email}">
+                    <strong>Company Email:</strong> 
+                    <span th:text="${user.company_email}"></span>
+                </div>
+                <div class="detail-item" th:if="${user.company_number}">
+                    <strong>Company Number:</strong> 
+                    <span th:text="${user.company_number}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>Submitted At:</strong> 
+                    <span th:text="${user.submitted_at}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>Status:</strong> 
+                    <span style="color: orange; font-weight: bold;" th:text="${user.status}"></span>
+                </div>
+            </div>
+
+
+
+<div class="documents">
+    <h3>📎 Uploaded Documents:</h3>
+    
+    <!-- Show individual document checks -->
+    <div class="document-item" th:if="${user.form16_url != null}">
+        📄 Form 16: <a th:href="${user.form16_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.incorporation_document_url != null}">
+        📄 Incorporation Document: <a th:href="${user.incorporation_document_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.financial_document_url != null}">
+        📄 Financial Document: <a th:href="${user.financial_document_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.balance_income_statement_url != null}">
+        📄 Balance Income Statement: <a th:href="${user.balance_income_statement_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.balance_sheet_url != null}">
+        📄 Balance Sheet: <a th:href="${user.balance_sheet_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.income_statement_url != null}">
+        📄 Income Statement: <a th:href="${user.income_statement_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.sole_doc1_url != null}">
+        📄 Sole Document 1: <a th:href="${user.sole_doc1_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.sole_doc2_url != null}">
+        📄 Sole Document 2: <a th:href="${user.sole_doc2_url}" target="_blank">Click to View</a>
+    </div>
+    <div class="document-item" th:if="${user.sole_doc3_url != null}">
+        📄 Sole Document 3: <a th:href="${user.sole_doc3_url}" target="_blank">Click to View</a>
+    </div>
+    
+    <!-- Show message if no documents -->
+    <div th:if="${user.form16_url == null and 
+                  user.incorporation_document_url == null and 
+                  user.financial_document_url == null and 
+                  user.balance_income_statement_url == null and 
+                  user.balance_sheet_url == null and 
+                  user.income_statement_url == null and 
+                  user.sole_doc1_url == null and 
+                  user.sole_doc2_url == null and 
+                  user.sole_doc3_url == null}">
+        <p style="color: #999; font-style: italic;">No documents uploaded for this role</p>
+    </div>
+</div>
+
+            <div class="admin-panel">
+                <h3>⚡ Quick Actions</h3>
+                <p>Please login to the admin panel to approve or reject this request:</p>
+                <a href="http://localhost:5173/admin/pending-registrations" class="button">Go to Admin Panel</a>
+            </div>
+
+
+            <p style="color: #666; font-size: 14px; margin-top: 30px;">
+                This is an automated message from TaxInstant. Please do not reply to this email.
+            </p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 TaxInstant. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

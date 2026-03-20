@@ -1,0 +1,63 @@
+# Updated application.yml
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  # Email Configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: btechcse231031@smvec.ac.in
+    password: zwws wrtv ylyp fezr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+security:
+  jwt:
+    secret: OMiB4flQDyNYRWHjslrRKHZ9XiqJb3tCbh2bF1FMLptMoWlLNwl7RfGanDxo69/nj7XdQpA3WjulGLm2aIyMSg==
+    access-token-expiration-ms: 900000  # 15 min
+    refresh-token-expiration-ms: 604800000  # 7 days
+
+# Supabase configuration
+supabase:
+  url: https://oxkhqubejvefwadbotes.supabase.co
+  key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94a2hxdWJlanZlZndhZGJvdGVzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDUzODU3MiwiZXhwIjoyMDg2MTE0NTcyfQ.mKHUIbrGx4UsN_iRZJn0mfWsnYZ4fPZmX62ln6nfUzs
+  storage-bucket: auth-documents
+
+# Admin email to receive registration requests
+admin:
+  email: btechcse231031@smvec.ac.in
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.taxinstant: DEBUG

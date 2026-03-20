@@ -1,0 +1,32 @@
+<!-- src/main/resources/templates/user-approval.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Approved</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #4CAF50; color: white; padding: 10px; text-align: center; }
+        .content { padding: 20px; background-color: #f9f9f9; }
+        .footer { margin-top: 20px; text-align: center; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Registration Approved!</h1>
+        </div>
+        <div class="content">
+            <p>Dear User,</p>
+            <p>Your registration as a <strong th:text="${role}"></strong> has been approved by our admin team.</p>
+            <p>You can now login to your account using your registered email and password.</p>
+            <p><a href="http://localhost:5173/login" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login to Your Account</a></p>
+            <p>Thank you for choosing TaxInstant!</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message from TaxInstant. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
