@@ -30,13 +30,24 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // ✅ Allow your frontend domain ONLY
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://taxinstant.vercel.app"));
+
+        // ✅ Allow HTTP methods
+        configuration.setAllowedMethods(Arrays.asList(
+                "GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // ✅ Allow headers
         configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        // ✅ IMPORTANT for login/auth
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
