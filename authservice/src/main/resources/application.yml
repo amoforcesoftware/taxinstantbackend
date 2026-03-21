@@ -1,4 +1,3 @@
-# Updated application.yml
 server:
   port: 8081
 
@@ -11,18 +10,23 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  # Email Configuration
+  # Email Configuration - SMTP with SSL
   mail:
     host: smtp.gmail.com
-    port: 587
+    port: 465
     username: btechcse231031@smvec.ac.in
-    password: zwws wrtv ylyp fezr
+    password: zwwswrtvylypfezr
+    protocol: smtps
     properties:
       mail:
         smtp:
           auth: true
-          starttls:
+          ssl:
             enable: true
+            trust: smtp.gmail.com
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
 
   thymeleaf:
     prefix: classpath:/templates/
@@ -41,16 +45,14 @@ eureka:
 security:
   jwt:
     secret: OMiB4flQDyNYRWHjslrRKHZ9XiqJb3tCbh2bF1FMLptMoWlLNwl7RfGanDxo69/nj7XdQpA3WjulGLm2aIyMSg==
-    access-token-expiration-ms: 900000  # 15 min
-    refresh-token-expiration-ms: 604800000  # 7 days
+    access-token-expiration-ms: 900000
+    refresh-token-expiration-ms: 604800000
 
-# Supabase configuration
 supabase:
   url: https://oxkhqubejvefwadbotes.supabase.co
   key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94a2hxdWJlanZlZndhZGJvdGVzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDUzODU3MiwiZXhwIjoyMDg2MTE0NTcyfQ.mKHUIbrGx4UsN_iRZJn0mfWsnYZ4fPZmX62ln6nfUzs
   storage-bucket: auth-documents
 
-# Admin email to receive registration requests
 admin:
   email: btechcse231031@smvec.ac.in
 
@@ -59,3 +61,4 @@ logging:
     root: INFO
     org.springframework: INFO
     com.taxinstant: DEBUG
+    org.springframework.mail: DEBUG
