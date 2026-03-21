@@ -131,7 +131,7 @@ public class AuthService {
         if (response != null && !response.isEmpty()) {
             Map<String, Object> savedPendingUser = response.get(0);
             // Send email to admin with registration details
-            emailService.sendRegistrationRequestToAdmin(savedPendingUser);
+            // emailService.sendRegistrationRequestToAdmin(savedPendingUser);
             log.info("Registration request email sent to admin for user: {}", email);
         }
     }
@@ -281,26 +281,28 @@ public class AuthService {
 
         Map<String, Object> pendingUser = pendingUsers.get(0);
 
+        // In processApproval method, comment out email sending:
         if (request.isApproved()) {
             // Move user to main users table
             moveToMainUsers(pendingUser);
 
-            // Send approval email to user
-            emailService.sendApprovalEmail(
-                    (String) pendingUser.get("email"),
-                    (String) pendingUser.get("role"));
+            // Send approval email to user - COMMENTED OUT
+            // emailService.sendApprovalEmail(
+            // (String) pendingUser.get("email"),
+            // (String) pendingUser.get("role"));
+            log.info("📧 [EMAIL DISABLED] Approval email would be sent to: {}", pendingUser.get("email"));
 
             log.info("User approved and moved to main users: {}", pendingUser.get("email"));
         } else {
-            // Send rejection email
-            emailService.sendRejectionEmail(
-                    (String) pendingUser.get("email"),
-                    (String) pendingUser.get("role"),
-                    request.getRejectionReason());
+            // Send rejection email - COMMENTED OUT
+            // emailService.sendRejectionEmail(
+            // (String) pendingUser.get("email"),
+            // (String) pendingUser.get("role"),
+            // request.getRejectionReason());
+            log.info("📧 [EMAIL DISABLED] Rejection email would be sent to: {}", pendingUser.get("email"));
 
             log.info("User rejected: {}", pendingUser.get("email"));
         }
-
         // Delete the pending user record after processing (both approve and reject)
         deletePendingUser(request.getPendingId());
         log.info("Pending user deleted with ID: {}", request.getPendingId());
