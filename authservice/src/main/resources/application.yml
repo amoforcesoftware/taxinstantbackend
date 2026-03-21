@@ -31,14 +31,12 @@ spring:
     encoding: UTF-8
     cache: false
 
+# Disable Eureka completely
 eureka:
   client:
-    service-url:
-      defaultZone: http://taxinstant.railway.internal:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
 
 security:
   jwt:
