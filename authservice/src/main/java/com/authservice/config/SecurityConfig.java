@@ -15,39 +15,39 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Allow all requests without authentication
-                );
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .authorizeHttpRequests(auth -> auth
+                                                .anyRequest().permitAll() // Allow all requests without authentication
+                                );
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
 
-        // ✅ Allow your frontend domain ONLY
-        configuration.setAllowedOrigins(Arrays.asList(
-                "https://taxinstant.vercel.app"));
+                // ✅ Allow your frontend domain ONLY
+                configuration.setAllowedOrigins(Arrays.asList(
+                                "https://taxinstant.vercel.app", "https://www.taxinstant.com"));
 
-        // ✅ Allow HTTP methods
-        configuration.setAllowedMethods(Arrays.asList(
-                "GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                // ✅ Allow HTTP methods
+                configuration.setAllowedMethods(Arrays.asList(
+                                "GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // ✅ Allow headers
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+                // ✅ Allow headers
+                configuration.setAllowedHeaders(Arrays.asList("*"));
 
-        // ✅ IMPORTANT for login/auth
-        configuration.setAllowCredentials(true);
+                // ✅ IMPORTANT for login/auth
+                configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
 
-        return source;
-    }
+                return source;
+        }
 }
