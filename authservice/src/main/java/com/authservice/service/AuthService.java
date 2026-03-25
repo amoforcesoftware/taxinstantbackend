@@ -130,8 +130,8 @@ public class AuthService {
 
         if (response != null && !response.isEmpty()) {
             Map<String, Object> savedPendingUser = response.get(0);
-            // Send email to admin with registration details
-            // emailService.sendRegistrationRequestToAdmin(savedPendingUser);
+            // Send email to admin with registration details - UNCOMMENT THIS
+            emailService.sendRegistrationRequestToAdmin(savedPendingUser);
             log.info("Registration request email sent to admin for user: {}", email);
         }
     }
@@ -283,24 +283,18 @@ public class AuthService {
 
         // In processApproval method, comment out email sending:
         if (request.isApproved()) {
-            // Move user to main users table
             moveToMainUsers(pendingUser);
-
-            // Send approval email to user - COMMENTED OUT
-            // emailService.sendApprovalEmail(
-            // (String) pendingUser.get("email"),
-            // (String) pendingUser.get("role"));
-            log.info("📧 [EMAIL DISABLED] Approval email would be sent to: {}", pendingUser.get("email"));
-
+            // Send approval email to user - UNCOMMENT THIS
+            emailService.sendApprovalEmail(
+                    (String) pendingUser.get("email"),
+                    (String) pendingUser.get("role"));
             log.info("User approved and moved to main users: {}", pendingUser.get("email"));
         } else {
-            // Send rejection email - COMMENTED OUT
-            // emailService.sendRejectionEmail(
-            // (String) pendingUser.get("email"),
-            // (String) pendingUser.get("role"),
-            // request.getRejectionReason());
-            log.info("📧 [EMAIL DISABLED] Rejection email would be sent to: {}", pendingUser.get("email"));
-
+            // Send rejection email - UNCOMMENT THIS
+            emailService.sendRejectionEmail(
+                    (String) pendingUser.get("email"),
+                    (String) pendingUser.get("role"),
+                    request.getRejectionReason());
             log.info("User rejected: {}", pendingUser.get("email"));
         }
         // Delete the pending user record after processing (both approve and reject)
@@ -669,8 +663,6 @@ public class AuthService {
 
         // Store reset token in database (you'll need a password_resets table)
         savePasswordResetToken(userId, resetToken);
-
-        // Send reset email
         emailService.sendPasswordResetEmail(request.getEmail(), resetToken);
 
         log.info("Password reset email sent to: {}", request.getEmail());

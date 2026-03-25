@@ -10,30 +10,22 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-  # Email Configuration - SMTP with SSL
-  mail:
-    host: smtp.gmail.com
-    port: 465
-    username: btechcse231031@smvec.ac.in
-    password: zwwswrtvylypfezr
-    protocol: smtps
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
-            trust: smtp.gmail.com
-          connectiontimeout: 10000
-          timeout: 10000
-          writetimeout: 10000
-
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
     encoding: UTF-8
     cache: false
+
+# Remove the spring.mail configuration entirely
+# Email is now handled by the Flask microservice
+
+# Email Service Configuration
+email:
+  service:
+    url: ${EMAIL_SERVICE_URL:http://localhost:5000}  # Change to your deployed URL
+    # For Railway: https://your-email-service.railway.app
+    # For PythonAnywhere: https://yourusername.pythonanywhere.com
 
 # Disable Eureka completely
 eureka:
@@ -61,4 +53,4 @@ logging:
     root: INFO
     org.springframework: INFO
     com.taxinstant: DEBUG
-    org.springframework.mail: DEBUG
+    com.authservice.client: DEBUG

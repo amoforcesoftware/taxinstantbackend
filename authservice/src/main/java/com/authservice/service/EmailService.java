@@ -1,15 +1,12 @@
+// EmailService.java
 package com.authservice.service;
 
+import com.authservice.client.EmailServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
-import jakarta.mail.internet.MimeMessage;
 import java.util.Map;
 
 @Slf4j
@@ -17,136 +14,73 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
-    private final TemplateEngine templateEngine;
+    private final EmailServiceClient emailClient;
 
     @Value("${admin.email}")
     private String adminEmail;
 
     public void sendRegistrationRequestToAdmin(Map<String, Object> user) {
         try {
-            log.info("📧 [EMAIL DISABLED] Would send registration request email to admin for user: {}",
-                    user.get("email"));
-            log.info("   To: {}", adminEmail);
-            log.info("   Subject: New Registration Request - {}", user.get("role"));
-            log.info("   User details: {}", user);
+            log.info("Sending registration request email to admin for user: {}", user.get("email"));
 
-            //
-            /*
-             * Context context = new Context();
-             * context.setVariable("user", user);
-             * 
-             * String htmlContent = templateEngine.process("admin-registration-request",
-             * context);
-             * 
-             * MimeMessage message = mailSender.createMimeMessage();
-             * MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-             * 
-             * helper.setTo(adminEmail);
-             * helper.setSubject("New Registration Request - " + user.get("role"));
-             * helper.setText(htmlContent, true);
-             * 
-             * mailSender.send(message);
-             * 
-             * log.info("Registration request email sent successfully to admin");
-             */
+            boolean success = emailClient.sendRegistrationRequestToAdmin(user, adminEmail);
+
+            if (success) {
+                log.info("Registration request email sent successfully to admin");
+            } else {
+                log.error("Failed to send registration request email to admin");
+            }
         } catch (Exception e) {
-            log.error("Failed to send email to admin: {}", e.getMessage());
-            // Don't throw exception - just log it
-            // throw new RuntimeException("Failed to send email to admin", e);
+            log.error("Error sending registration request email: {}", e.getMessage());
         }
     }
 
     public void sendApprovalEmail(String userEmail, String role) {
         try {
-            log.info("[EMAIL DISABLED] Would send approval email to user: {}", userEmail);
-            log.info("   Subject: Registration Approved - TaxInstant");
-            log.info("   Role: {}", role);
+            log.info("Sending approval email to user: {}", userEmail);
 
-            // TODO: Uncomment when email is configured properly
-            /*
-             * Context context = new Context();
-             * context.setVariable("role", role);
-             * 
-             * String htmlContent = templateEngine.process("user-approval", context);
-             * 
-             * MimeMessage message = mailSender.createMimeMessage();
-             * MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-             * 
-             * helper.setTo(userEmail);
-             * helper.setSubject("Registration Approved - TaxInstant");
-             * helper.setText(htmlContent, true);
-             * 
-             * mailSender.send(message);
-             * 
-             * log.info("Approval email sent successfully to: {}", userEmail);
-             */
+            boolean success = emailClient.sendApprovalEmail(userEmail, role);
+
+            if (success) {
+                log.info("Approval email sent successfully to: {}", userEmail);
+            } else {
+                log.error("Failed to send approval email to: {}", userEmail);
+            }
         } catch (Exception e) {
-            log.error("Failed to send approval email: {}", e.getMessage());
-            // Don't throw exception
+            log.error("Error sending approval email: {}", e.getMessage());
         }
     }
 
     public void sendRejectionEmail(String userEmail, String role, String reason) {
         try {
-            log.info("📧 [EMAIL DISABLED] Would send rejection email to user: {}", userEmail);
-            log.info("   Reason: {}", reason);
+            log.info("Sending rejection email to user: {}", userEmail);
 
-            // TODO: Uncomment when email is configured properly
-            /*
-             * Context context = new Context();
-             * context.setVariable("role", role);
-             * context.setVariable("reason", reason != null ? reason :
-             * "Does not meet our requirements");
-             * 
-             * String htmlContent = templateEngine.process("user-rejection", context);
-             * 
-             * MimeMessage message = mailSender.createMimeMessage();
-             * MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-             * 
-             * helper.setTo(userEmail);
-             * helper.setSubject("Registration Update - TaxInstant");
-             * helper.setText(htmlContent, true);
-             * 
-             * mailSender.send(message);
-             * 
-             * log.info("Rejection email sent successfully to: {}", userEmail);
-             */
+            boolean success = emailClient.sendRejectionEmail(userEmail, role, reason);
+
+            if (success) {
+                log.info("Rejection email sent successfully to: {}", userEmail);
+            } else {
+                log.error("Failed to send rejection email to: {}", userEmail);
+            }
         } catch (Exception e) {
-            log.error("Failed to send rejection email: {}", e.getMessage());
-            // Don't throw exception
+            log.error("Error sending rejection email: {}", e.getMessage());
         }
     }
 
     public void sendPasswordResetEmail(String userEmail, String token) {
         try {
-            log.info("📧 [EMAIL DISABLED] Would send password reset email to: {}", userEmail);
-            log.info("   Reset token: {}", token);
+            log.info("Sending password reset email to: {}", userEmail);
 
-            // TODO: Uncomment when email is configured properly
-            /*
-             * String resetLink = "http://localhost:5173/reset-password?token=" + token;
-             * 
-             * Context context = new Context();
-             * context.setVariable("resetLink", resetLink);
-             * context.setVariable("expiryMinutes", 10);
-             * 
-             * String htmlContent = templateEngine.process("password-reset", context);
-             * 
-             * MimeMessage message = mailSender.createMimeMessage();
-             * MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-             * 
-             * helper.setTo(userEmail);
-             * helper.setSubject("Reset Your Password - TaxInstant");
-             * helper.setText(htmlContent, true);
-             * 
-             * mailSender.send(message);
-             * 
-             * log.info("Password reset email sent successfully to: {}", userEmail);
-             */
+            String resetLink = "http://localhost:5173/reset-password?token=" + token;
+            boolean success = emailClient.sendPasswordResetEmail(userEmail, resetLink);
+
+            if (success) {
+                log.info("Password reset email sent successfully to: {}", userEmail);
+            } else {
+                log.error("Failed to send password reset email to: {}", userEmail);
+            }
         } catch (Exception e) {
-            log.error("Failed to send password reset email: {}", e.getMessage());
-            // Don't throw exception
+            log.error("Error sending password reset email: {}", e.getMessage());
         }
     }
 }
