@@ -33,7 +33,8 @@ public class SecurityConfig {
 
                 // ✅ Allow your frontend domain ONLY
                 configuration.setAllowedOrigins(Arrays.asList(
-                                "https://taxinstant.vercel.app", "https://www.taxinstant.com"));
+                                "https://taxinstant.vercel.app", "https://www.taxinstant.com",
+                                "http://localhost:5173"));
 
                 // ✅ Allow HTTP methods
                 configuration.setAllowedMethods(Arrays.asList(

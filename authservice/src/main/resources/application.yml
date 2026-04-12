@@ -23,7 +23,7 @@ spring:
 # Email Service Configuration
 email:
   service:
-    url: ${EMAIL_SERVICE_URL:http://localhost:5000}  # Change to your deployed URL
+    url: ${EMAIL_SERVICE_URL:https://taxinstant.pythonanywhere.com}  # Change to your deployed URL
     # For Railway: https://your-email-service.railway.app
     # For PythonAnywhere: https://yourusername.pythonanywhere.com
 

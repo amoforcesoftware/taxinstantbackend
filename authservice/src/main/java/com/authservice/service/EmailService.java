@@ -71,7 +71,7 @@ public class EmailService {
         try {
             log.info("Sending password reset email to: {}", userEmail);
 
-            String resetLink = "http://localhost:5173/reset-password?token=" + token;
+            String resetLink = "https://www.taxinstant.com/reset-password?token=" + token;
             boolean success = emailClient.sendPasswordResetEmail(userEmail, resetLink);
 
             if (success) {

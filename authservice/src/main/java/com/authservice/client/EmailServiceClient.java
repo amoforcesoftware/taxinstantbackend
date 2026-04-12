@@ -16,7 +16,7 @@ public class EmailServiceClient {
 
     private final WebClient webClient;
 
-    @Value("${email.service.url:http://localhost:5000}")
+    @Value("${email.service.url:https://taxinstant.pythonanywhere.com}")
     private String emailServiceUrl;
 
     public EmailServiceClient() {
