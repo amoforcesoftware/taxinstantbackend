@@ -107,4 +107,17 @@ public class AuthController {
             return ResponseEntity.status(500).body("An error occurred. Please try again later.");
         }
     }
+    // ================= PENDING COUNT ENDPOINT =================
+
+    @GetMapping("/admin/pending/count")
+    public ResponseEntity<?> getPendingCount() {
+        try {
+            long count = authService.getPendingCount();
+            java.util.Map<String, Long> response = new java.util.HashMap<>();
+            response.put("count", count);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to fetch pending count");
+        }
+    }
 }

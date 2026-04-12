@@ -776,4 +776,21 @@ public class AuthService {
                 .bodyToMono(String.class)
                 .block();
     }
+    // ================= GET PENDING COUNT =================
+
+    public long getPendingCount() {
+        log.info("Fetching pending users count");
+
+        List<Map<String, Object>> pendingUsers = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/rest/v1/pending_users")
+                        .queryParam("status", "eq.PENDING")
+                        .queryParam("select", "id")
+                        .build())
+                .retrieve()
+                .bodyToMono(List.class)
+                .block();
+
+        return pendingUsers != null ? pendingUsers.size() : 0;
+    }
 }
