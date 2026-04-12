@@ -46,7 +46,7 @@ supabase:
   storage-bucket: auth-documents
 
 admin:
-  email: btechcse231031@smvec.ac.in
+  email: taxinstantlive@gmail.com
 
 logging:
   level:
